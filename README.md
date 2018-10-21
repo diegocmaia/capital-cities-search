@@ -1,4 +1,4 @@
-# capitial-cities-search
+# capital-cities-search
 
 Get started with:
 
