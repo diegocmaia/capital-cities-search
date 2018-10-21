@@ -21,31 +21,19 @@ const Highlight = styled.strong`
 `
 
 const getBasicResult = ({ item, search = 'er' }) => {
-    const lowerCaseWord = item.toLowerCase()
-    const lowerCaseSearch = search.toLowerCase()
-    const matchItemSearch = lowerCaseWord.match(lowerCaseSearch)
-
-    if (!item) {
-        return null
-    }
-
-    if (!matchItemSearch) {
-        return <span>{item}</span>
-    }
-
-    const array = item.split('')
-    const indexStartMatch = matchItemSearch.index
-    const indexEndMatch = search.length + indexStartMatch - 1
-
-    const componentsArray = array.map((letter, index) => {
-        if (index >= indexStartMatch && index <= indexEndMatch) {
-            return <Highlight key={index}>{letter}</Highlight>
-        } else {
-            return <span key={index}>{letter}</span>
-        }
-    })
-
-    return <span>{componentsArray}</span>
+    var blocks = item.split(new RegExp(`(${search})`, 'gi'))
+    return (
+        <span>
+            {blocks.map(
+                block =>
+                    block.toLowerCase() === search.toLowerCase() ? (
+                        <Highlight>{block}</Highlight>
+                    ) : (
+                        block
+                    )
+            )}
+        </span>
+    )
 }
 
 const SearchItem = ({ searchText: search, item, renderSuggestions }) => {
